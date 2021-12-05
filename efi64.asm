@@ -3,14 +3,12 @@ entry efi_main
 
 section '.text' code executable readable
 efi_main:
-    mov rcx, rdx
-    mov rcx, [rcx + 0x40] ; ConOut
-    lea rdx, [Message]
+    mov rcx, [rdx + 0x40] ; ConOut
+    lea rdx, [message]
     call qword [rcx + 0x08] ; OutputString
 
-    mov eax, 0 ; EFI_SUCCESS
+    xor eax, eax ; EFI_SUCCESS
     retn
 
-section '.rodata' data readable
-    Message du "Hello EFI World!", 0x0D, 0x0A
-            du 0x00
+message:
+    du 'Hello, world!', 13, 10, 0
